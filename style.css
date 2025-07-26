@@ -1,0 +1,463 @@
+/* style.css */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F0F0F0; /* Fundo cinza claro */
+    color: #333333; /* Texto escuro para contraste */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinhar ao topo para melhor scroll em mobile */
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.game-container {
+    background-color: #FFFFFF; /* Fundo branco para simular a carta */
+    border-radius: 1.5rem; /* Bordas arredondadas */
+    padding: 2.5rem; /* Mais preenchimento */
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2), 0 4px 10px -2px rgba(0, 0, 0, 0.1); /* Sombra mais forte */
+    width: 100%;
+    max-width: 600px; /* Largura máxima para desktop */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Espaçamento aumentado */
+    border: 4px solid #B91C1C; /* Borda vermelha marcante */
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.section-card {
+    background-color: #F9F9F9; /* Fundo levemente cinza para seções internas */
+    border-radius: 0.75rem; /* Arredondado para elementos internos */
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border: 1px solid #DC2626; /* Borda vermelha sutil */
+}
+
+input[type="number"], input[type="text"], select { /* Adicionado select aqui */
+    background-color: #FFFFFF; /* Fundo branco para input/select */
+    border: 1px solid #EF4444; /* Borda vermelha para input/select */
+    color: #333333; /* Texto escuro */
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    transition: border-color 0.2s ease-in-out;
+    -moz-appearance: textfield; /* Firefox */
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"]:focus, input[type="text"]:focus, select:focus {
+    outline: none;
+    border-color: #B91C1C; /* Vermelho escuro no foco */
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.5); /* Sombra de foco vermelha */
+}
+select {
+    cursor: pointer;
+    -webkit-appearance: none; /* Remove default arrow */
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23DC2626' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+    background-size: 1em;
+}
+/* Style for radio buttons */
+.form-radio {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    cursor: pointer;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    margin-right: 0.5rem;
+}
+.form-radio:checked {
+    background-color: #DC2626; /* Red when checked */
+    border-color: #DC2626;
+}
+.form-radio:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: #fff;
+    transform: translate(-50%, -50%);
+}
+.form-radio:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.5);
+}
+
+button {
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    color: #FFFFFF; /* Texto do botão branco */
+}
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px -2px rgba(0, 0, 0, 0.2);
+}
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+}
+
+.start-game-button, .confirm-names-button, .confirm-mode-button {
+    background-color: #B91C1C; /* Vermelho escuro */
+}
+.start-game-button:hover, .confirm-names-button:hover, .confirm-mode-button:hover {
+    background-color: #991B1B; /* Vermelho mais escuro no hover */
+}
+
+.start-round-button {
+    background-color: #3B82F6; /* Azul para "Nova Rodada" */
+}
+.start-round-button:hover {
+    background-color: #2563EB; /* Azul mais escuro no hover */
+}
+
+.submit-number-button {
+    background-color: #EF4444; /* Vermelho claro */
+}
+.submit-number-button:hover {
+    background-color: #DC2626; /* Vermelho padrão no hover */
+}
+.get-hint-button {
+    background-color: #F87171; /* Vermelho bem claro para a dica */
+}
+.get-hint-button:hover {
+    background-color: #EF4444;
+}
+
+.rules-button, .back-button { /* Botão de regras e voltar */
+    background-color: #718096; /* Cinza */
+}
+.rules-button:hover, .back-button:hover {
+    background-color: #4A5568; /* Cinza mais escuro */
+}
+
+.reset-button {
+    background-color: #F87171; /* Vermelho claro para reset */
+}
+.reset-button:hover {
+    background-color: #EF4444;
+}
+
+.disabled-button {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.message-area, .round-results-display {
+    background-color: #DC2626; /* Fundo vermelho para mensagens e resultados */
+    color: #FFFFFF; /* Texto branco */
+    border-radius: 0.75rem;
+    padding: 1rem;
+    min-height: 80px; /* Garantir espaço para mensagens */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.round-results-display {
+    display: none; /* Escondido por padrão */
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.rules-display {
+    background-color: #F9F9F9; /* Fundo levemente cinza para regras */
+    border-radius: 0.75rem;
+    padding: 1rem;
+    display: none; /* Escondido por padrão */
+    flex-direction: column;
+    gap: 0.5rem;
+    border: 1px solid #DC2626; /* Borda vermelha sutil */
+}
+.rules-display ul {
+    list-style: disc;
+    margin-left: 20px;
+    color: #333333;
+}
+.rules-display li {
+    margin-bottom: 5px;
+}
+.rules-display ul ul { /* Para sublistas */
+    list-style: circle;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+/* Títulos */
+.game-container h1 {
+    color: #B91C1C; /* Vermelho escuro para o título principal */
+}
+.section-card h2 {
+    color: #333333; /* Texto escuro para subtítulos */
+}
+.text-gray-400 { /* Para a descrição do jogo */
+    color: #555555;
+}
+.text-gray-200 { /* Para o texto da mensagem inicial */
+    color: #FFFFFF;
+}
+.hint-text {
+    color: #555555; /* Cor do texto da dica */
+}
+
+/* Winner Animation Overlay */
+#winnerAnimationOverlay, #punishmentOverlay { /* Combined styles for overlays */
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    opacity: 0; /* Hidden by default */
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out;
+}
+#winnerAnimationOverlay.show, #punishmentOverlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#winnerAnimationOverlay h2 {
+    font-size: 4rem; /* Larger for champion text */
+    font-weight: 800;
+    color: #FFFFFF;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
+    animation: pulse 1.5s infinite alternate; /* Simple pulse animation */
+}
+
+#winnerAnimationOverlay p {
+    font-size: 3rem; /* Larger for winner name */
+    font-weight: 700;
+    color: #FCD34D; /* Yellow for winner name */
+    text-shadow: 0 0 8px rgba(252, 211, 77, 0.6);
+}
+
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+}
+
+#confettiCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allows clicks to pass through */
+}
+
+/* Punishment Overlay specific styles */
+#punishmentOverlay .punishment-content {
+    background-color: #DC2626; /* Red background for punishment */
+    color: #FFFFFF;
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+#punishmentOverlay h2 {
+    font-size: 2.5rem; /* Smaller than champion, but still prominent */
+    font-weight: 700;
+    color: #FFC107; /* Yellow for attention */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+#punishmentOverlay p {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+#punishmentOverlay button {
+    background-color: #FCD34D; /* Yellow button for action */
+    color: #B91C1C; /* Red text on yellow */
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+}
+#punishmentOverlay button:hover {
+    background-color: #FBBF24;
+}
+
+
+/* --- Estilos do Tabuleiro de Jogo --- */
+.board-container {
+    background-color: #F9F9F9; /* Fundo do tabuleiro */
+    border: 2px solid #B91C1C; /* Borda do tabuleiro */
+    border-radius: 1rem;
+    padding: 1rem;
+    overflow-x: auto; /* Permite rolagem horizontal se muitos quadrados */
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
+}
+
+.board-track {
+    display: flex;
+    gap: 0px; /* Sem espaçamento entre os quadrados */
+    padding: 5px 0; /* Pequeno padding vertical */
+    min-width: fit-content; /* Garante que o track não quebre em várias linhas */
+    align-items: center; /* Alinha os quadrados verticalmente */
+}
+
+.board-square {
+    width: 45px; /* Tamanho fixo do quadrado */
+    height: 45px; /* Tamanho fixo do quadrado */
+    flex-shrink: 0; /* Não permite que os quadrados encolham */
+    background-color: #EFEFEF; /* Cor dos quadrados normais */
+    border: 1px solid #DC2626; /* Borda dos quadrados */
+    border-radius: 0.3rem; /* Levemente arredondado */
+    display: flex; /* Para posicionar avatares dentro */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #333;
+    position: relative; /* Para posicionamento absoluto dos avatares */
+    overflow: hidden; /* Hide overflow for content, but avatars can be outside */
+    box-sizing: border-box; /* Include padding/border in width/height */
+}
+.board-square:first-child { border-top-left-radius: 1rem; border-bottom-left-radius: 1rem; }
+.board-square:last-child { border-top-right-radius: 1rem; border-bottom-right-radius: 1rem; }
+
+.board-square.start-square {
+    background-color: #68D391; /* Verde para o início (0) */
+    color: #FFFFFF;
+    border-color: #38A169;
+}
+
+.board-square.finish-square {
+    background-color: #F6AD55; /* Laranja/Amarelo para a linha de chegada (10) */
+    color: #FFFFFF;
+    border-color: #DD6B20;
+}
+.board-square.elimination-square {
+    background-color: #FC8181; /* Vermelho claro para a eliminação (-10) */
+    color: #FFFFFF;
+    border-color: #E53E3E;
+}
+
+.player-avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: absolute; /* Posicionamento dentro do quadrado */
+    transition: all 0.5s ease-in-out; /* Animação suave de movimento */
+    z-index: 10; /* Para ficar sobre o quadrado */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    border: 1px solid rgba(0,0,0,0.2); /* Borda sutil */
+}
+.player-avatar.eliminated-avatar {
+    opacity: 0.3; /* Avatares eliminados ficam mais transparentes */
+    filter: grayscale(100%); /* Ficam em escala de cinza */
+}
+.player-avatar.white-avatar { /* Borda extra para avatar branco */
+    border: 1px solid #333333;
+}
+
+/* Nomes dos jogadores flutuantes sobre o tabuleiro */
+.player-name-on-board {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 0.7em;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2px 5px;
+    border-radius: 0.5rem;
+    color: #333;
+    bottom: -20px; /* Posição abaixo do avatar */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 11;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    body {
+        padding: 15px;
+    }
+    .game-container {
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+    .section-card {
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+    input[type="number"], input[type="text"], select {
+        padding: 0.6rem;
+    }
+    button {
+        padding: 0.7rem 1.2rem;
+    }
+    .message-area, .round-results-display, .rules-display {
+        min-height: 60px;
+        font-size: 1rem;
+    }
+    #winnerAnimationOverlay h2 {
+        font-size: 3rem; /* Smaller on mobile */
+    }
+    #winnerAnimationOverlay p {
+        font-size: 2rem; /* Smaller on mobile */
+    }
+    .board-square {
+        width: 40px; /* Slightly smaller squares on mobile */
+        height: 40px;
+    }
+    .player-avatar {
+        width: 18px;
+        height: 18px;
+    }
+    .player-name-on-board {
+        font-size: 0.6em;
+        bottom: -18px;
+    }
+    #punishmentOverlay .punishment-content {
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+    #punishmentOverlay h2 {
+        font-size: 2rem;
+    }
+    #punishmentOverlay p {
+        font-size: 1.5rem;
+    }
+}
