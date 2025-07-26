@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo dos Números</title>
+    <!-- Link para o Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Link para a fonte Inter do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Link para o arquivo de estilo CSS personalizado -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="text-4xl font-bold text-center mb-4">Jogo dos Números</h1>
+        <p class="text-center text-gray-400">
+            Cada participante escolhe um número de 0 a 100. O mais próximo de (média * 0.8) ganha 1 ponto. Os outros perdem 1. Quem alcança a casa 10 no tabuleiro vence, quem atinge a casa -10 é eliminado.
+        </p>
+
+        <!-- Seção de seleção de modo de jogo, quantidade de jogadores e nomes -->
+        <div id="playerCountSetup" class="section-card">
+            <!-- Modo de Jogo -->
+            <div id="modeSelectionSection">
+                <h2 class="text-xl font-semibold text-center text-gray-700 mb-4">Escolha o Modo de Jogo:</h2>
+                <div class="flex flex-col gap-3 mb-6">
+                    <label class="inline-flex items-center text-gray-700">
+                        <input type="radio" name="gameMode" value="normal" class="form-radio text-red-600 h-5 w-5" checked>
+                        <span class="ml-2 font-medium">Normal (apenas pontos)</span>
+                    </label>
+                    <label class="inline-flex items-center text-gray-700">
+                        <input type="radio" name="gameMode" value="fitness" class="form-radio text-red-600 h-5 w-5">
+                        <span class="ml-2 font-medium">Fitness (exercícios físicos)</span>
+                    </label>
+                    <label class="inline-flex items-center text-gray-700">
+                        <input type="radio" name="gameMode" value="bebedeira" class="form-radio text-red-600 h-5 w-5">
+                        <span class="ml-2 font-medium">Bebedeira (toma uma dose)</span>
+                    </label>
+                </div>
+                <button id="confirmModeBtn" class="confirm-mode-button w-full">Confirmar Modo</button>
+            </div>
+
+            <!-- Seleção de Quantidade de Jogadores - inicialmente oculta -->
+            <div id="initialSetup" class="hidden">
+                <label for="playerCount" class="text-lg font-semibold text-gray-700">Quantos jogadores (2 a 10)?</label>
+                <input type="number" id="playerCount" min="2" max="10" value="5">
+                <button id="startGameBtn" class="start-game-button w-full">Iniciar Jogo</button>
+                <button id="backToModeSelectionBtn" class="back-button w-full mt-2">Voltar</button>
+            </div>
+
+            <!-- Entrada de Nomes e Avatares - inicialmente oculta -->
+            <div id="nameInputSection" class="hidden flex-col gap-4">
+                <h2 class="text-xl font-semibold text-center text-gray-700">Digite o nome e escolha o avatar de cada jogador:</h2>
+                <div id="playerNamesAndAvatarsInputs" class="grid grid-cols-1 gap-4">
+                    <!-- Inputs de nome e seletores de avatar serão gerados aqui -->
+                </div>
+                <button id="confirmNamesBtn" class="confirm-names-button w-full">Confirmar Nomes</button>
+                <button id="backToPlayerCountBtn" class="back-button w-full mt-2">Voltar</button>
+            </div>
+            
+            <!-- Botão de Regras e Display -->
+            <button id="rulesBtn" class="rules-button w-full mt-4">Regras</button>
+            <div id="rulesDisplay" class="rules-display hidden">
+                <h3 class="text-xl font-bold text-red-700 text-center mb-2">Regras do Jogo</h3>
+                <ul>
+                    <li><strong>Objetivo:</strong> Ser o primeiro jogador a atingir a **casa 10** no tabuleiro.</li>
+                    <li><strong>Número de Jogadores:</strong> O jogo pode ser jogado por <strong>2 a 10 participantes</strong>.</li>
+                    <li><strong>Início do Jogo:</strong> Todos os jogadores começam na **casa 0** (ponto de partida).</li>
+                    <li><strong>Escolha do Número por Rodada:</strong>
+                        <ul>
+                            <li>Em cada rodada, cada participante ativo deve escolher um número inteiro de <strong>0 a 100</strong>.</li>
+                            <li>A escolha do número é feita individualmente, em turnos, para que os outros jogadores não vejam a opção selecionada.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Cálculo do Número-Alvo:</strong>
+                        <ul>
+                            <li>Após todos os jogadores ativos terem escolhido seus números, a <strong>média de todos os números escolhidos</strong> na rodada é calculada.</li>
+                            <li>Essa média é então multiplicada por <strong>0.8</strong> para determinar o <strong>número-alvo</strong> da rodada.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Movimento no Tabuleiro (Pontuação da Rodada):</strong>
+                        <ul>
+                            <li>O jogador que escolheu o número <strong>mais próximo</strong> do número-alvo da rodada avança **1 casa** no tabuleiro (ganha 1 ponto).</li>
+                            <li>Em caso de empate na proximidade com o número-alvo, o jogador com o menor ID (Jogador 1, depois Jogador 2, etc.) vence o desempate.</li>
+                            <li>Todos os outros jogadores (que não foram o vencedor da rodada) retrocedem **1 casa** no tabuleiro (perdem 1 ponto).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Regra de Números Duplicados:</strong>
+                        <ul>
+                            <li>Se dois ou mais jogadores escolherem <strong>o mesmo número</strong> em uma rodada, <strong>todos</strong> esses jogadores que escolheram o número duplicado retrocedem **1 casa adicional** (perdem 1 ponto adicional).</li>
+                            <li>Além da penalidade de ponto, jogadores que escolheram números duplicados <strong>não podem vencer a rodada</strong> por proximidade, mesmo que o número deles seja o mais próximo do número-alvo.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Penalidades Adicionais por Modo de Jogo:</strong>
+                        <ul>
+                            <li>No modo <strong>Fitness</strong>, quem perde pontos na rodada deve cumprir <strong>um castigo de exercício físico aleatório</strong> (sorteado entre flexões, polichinelos e abdominais).</li>
+                            <li>No modo <strong>Bebedeira</strong>:
+                                <ul>
+                                    <li>Quem perde pontos na rodada deve <strong>tomar uma dose</strong>.</li>
+                                    <li>Se um jogador perder pontos por <strong>três rodadas consecutivas</strong>, a penalidade para essa rodada (e qualquer rodada perdida subsequente enquanto a sequência de perdas continuar) será de <strong>duas doses</strong>.</li>
+                                </ul>
+                            </li>
+                            <li>No modo <strong>Normal</strong>, não há penalidades adicionais, apenas a perda de pontos no tabuleiro.</li>
+                            <li>As penalidades são apresentadas em um pop-up individualmente para cada perdedor da rodada que se qualificar.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Condição de Eliminação:</strong> Um participante é <strong>eliminado</strong> do jogo se sua pontuação atingir a **casa -10** ou menos. Jogadores eliminados permanecem na casa -10, mas não participam das rodadas futuras e são visualmente marcados.</li>
+                    <li><strong>Condição de Vitória:</strong> O jogo termina e um jogador vence quando:
+                        <ul>
+                            <li>Um participante alcança a **casa 10** no tabuleiro ou mais.</li>
+                            <li>Todos os outros participantes são eliminados, restando apenas um jogador ativo.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Reiniciar Jogo:</strong> O jogo pode ser reiniciado a qualquer momento, voltando à tela de seleção de modo de jogo.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Conteúdo do jogo (inicialmente oculto) -->
+        <div id="gameContent" class="hidden">
+            <div id="gameBoard" class="board-container mb-6">
+                <div class="board-track" id="boardTrack">
+                    <!-- Quadrados do tabuleiro e avatares serão injetados aqui -->
+                </div>
+            </div>
+
+            <button id="startRoundBtn" class="start-round-button w-full mb-6">Iniciar Nova Rodada</button>
+
+            <div id="inputSection" class="section-card hidden mb-6">
+                <h2 id="currentPlayerName" class="text-xl font-semibold text-center mb-2"></h2>
+                <input type="number" id="playerNumberInput" min="0" max="100" placeholder="Digite seu número (0-100)">
+                <button id="submitNumberBtn" class="submit-number-button w-full">Confirmar Número</button>
+                <button id="getHintBtn" class="get-hint-button w-full mt-2">Pedir Dica ✨</button>
+                <div id="hintDisplay" class="text-sm hint-text mt-2 text-center"></div>
+            </div>
+
+            <div id="roundResultsDisplay" class="round-results-display mb-6">
+                <p class="text-lg font-semibold">Resultados da Rodada:</p>
+                <p id="targetNumber" class="text-md"></p>
+                <p id="duplicatePenaltyMessage" class="text-md text-yellow-300 font-bold hidden"></p>
+                <p id="winnerMessage" class="text-md font-bold text-green-300"></p>
+                <div id="roundPenaltyDetails" class="mt-2 text-sm text-center"></div> <!-- Novo para detalhes das penalidades -->
+            </div>
+
+            <div id="messageArea" class="message-area mb-6">
+                <!-- Mensagens do jogo -->
+            </div>
+
+            <button id="resetGameBtn" class="reset-button w-full">Reiniciar Jogo</button>
+        </div>
+    </div>
+
+    <!-- Overlay de Animação do Vencedor -->
+    <div id="winnerAnimationOverlay" class="fixed inset-0 bg-black bg-opacity-75 hidden flex flex-col items-center justify-center z-50">
+        <h2 class="text-6xl font-extrabold text-white animate-pulse mb-8">CAMPEÃO!</h2>
+        <p id="winnerNameDisplay" class="text-4xl font-bold text-yellow-300"></p>
+        <!-- Canvas para os confetes será criado aqui pelo JS da biblioteca -->
+    </div>
+
+    <!-- NOVO: Overlay de Castigo -->
+    <div id="punishmentOverlay" class="fixed inset-0 bg-black bg-opacity-75 hidden flex flex-col items-center justify-center z-50">
+        <div class="punishment-content">
+            <h2 id="punishmentTitle">Castigo!</h2>
+            <p id="punishmentPlayerName"></p>
+            <p id="punishmentDescription"></p>
+            <button id="punishmentActionButton" class="w-full"></button>
+        </div>
+    </div>
+
+    <!-- Link para a biblioteca Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <!-- Link para o arquivo JavaScript principal -->
+    <script src="script.js"></script>
+</body>
+</html>
